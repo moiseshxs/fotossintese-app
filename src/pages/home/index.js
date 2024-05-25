@@ -7,6 +7,9 @@ import sqLiteFoto from '../../sqlite/sqLiteFoto';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 export default function App() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedFoto, setSelectedFoto] = useState(null);
+
   const [fotos, setFotos] = useState([]);
   const isFocused = useIsFocused();
 
@@ -37,12 +40,19 @@ export default function App() {
   const renderRow = ({ item }) => (
     <View style={styles.row}>
       {item.map((foto) => (
-        <View key={foto.id} style={styles.itemContainer}>
+        <Pressable 
+          key={foto.id} 
+          style={styles.itemContainer}
+          onPress={() => {
+            setSelectedFoto(foto);
+            setModalVisible(true);
+          }}
+        >
           <Image
             source={{ uri: `data:image/jpeg;base64,${foto.foto}` }}
             style={styles.imgFeed}
           />
-        </View>
+        </Pressable>
       ))}
     </View>
   );
@@ -52,7 +62,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <View style={styles.areaHeader}>
         <Ionicons name="flower-outline" size={34} color="white" />
-        <Text style={styles.titulo}>Fotosintese</Text>
+        <Text style={styles.titulo}>Fotossintese</Text>
       </View>
 
       <View style={styles.areaBtn}>
@@ -70,6 +80,25 @@ export default function App() {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      {selectedFoto && (
+        <Modal
+          visible={modalVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <Pressable style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
+              <Ionicons name="close-circle" size={34} color="white" />
+            </Pressable>
+            <Image
+              source={{ uri: `data:image/jpeg;base64,${selectedFoto.foto}` }}
+              style={styles.modalImage}
+            />
+          </View>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 }

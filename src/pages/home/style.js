@@ -55,4 +55,22 @@ export default StyleSheet.create({
     width: 110,
     height: 110,
   },
+
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: '95%',
+    height: '70%',
+    borderRadius: 10,
+    objectFit: 'contain',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 55,
+    right: 20,
+  },
 })

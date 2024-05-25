@@ -17,6 +17,7 @@ export default function App() {
 
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
+  const [flashMode, setFlashMode] = useState('on');
 
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState(null);
@@ -57,6 +58,11 @@ export default function App() {
   function toggleCameraFacing() {
     //Camera frontal ou traseira
     setFacing(current => (current === 'back' ? 'front' : 'back'));
+  }
+
+  function toggleFlashMode() {
+    //Flash ou nao sla
+    setFlashMode(current => (current === 'on' ? 'off' : 'on'));
   }
 
 
